@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MEdical Info Support</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #eff9fa;
+        --card: #ffffff;
+        --text: #16313a;
+        --muted: #53707a;
+        --line: #d6ebee;
+        --brand: #25c4d1;
+        --brand-deep: #149aa6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(180deg, #f4fcfd 0%, var(--bg) 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .wrap {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 32px 20px 72px;
+      }
+
+      .hero,
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 14px 40px rgba(20, 74, 85, 0.08);
+      }
+
+      .hero {
+        padding: 28px;
+        margin-bottom: 20px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(37, 196, 209, 0.12);
+        color: var(--brand-deep);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      h1,
+      h2 {
+        font-family: "Libre Baskerville", Georgia, serif;
+        line-height: 1.25;
+      }
+
+      h1 {
+        margin: 18px 0 10px;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0 0 14px;
+      }
+
+      .hero p:last-child,
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      a {
+        color: var(--brand-deep);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="hero">
+        <div class="brand">MEdical Info</div>
+        <h1>Support</h1>
+        <p>
+          MEdical Info is a local-first app for storing and showing important personal medical information
+          from a phone. This page is the public support page used for the App Store listing.
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>What the App Does</h2>
+          <ul>
+            <li>stores personal details and emergency contacts</li>
+            <li>tracks medications, allergies, conditions, surgeries, and providers</li>
+            <li>shows a clean doctor-facing summary</li>
+            <li>supports local export and import backup</li>
+            <li>supports medication reminders and dose logging</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Quick Help</h2>
+          <p><strong>Moving to a new phone?</strong> Use Export in Settings on the old phone, then Import on the new phone.</p>
+          <p><strong>Want extra privacy?</strong> Turn on app lock and screen privacy protection in Settings.</p>
+          <p><strong>Need something for a doctor?</strong> Use Doctor View or export the doctor PDF from Settings.</p>
+        </article>
+
+        <article class="card">
+          <h2>Reminder Notes</h2>
+          <p>
+            Reminder times are based on the wake and sleep window saved in Settings. The app is designed to avoid
+            overnight reminders outside those hours.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Privacy</h2>
+          <p>
+            Most medical information is stored locally on the device. For full details, please read the privacy policy.
+          </p>
+          <p><a href="https://andeehhhh.github.io/new2/privacy-policy.html">Open Privacy Policy</a></p>
+        </article>
+
+        <article class="card">
+          <h2>Contact</h2>
+          <p><strong>Support email:</strong> <a href="mailto:[SUPPORT EMAIL]">[SUPPORT EMAIL]</a></p>
+          <p><strong>Support website:</strong> <a href="https://andeehhhh.github.io/new2/support.html">https://andeehhhh.github.io/new2/support.html</a></p>
+          <p class="muted">
+            Replace the support email placeholder before App Store submission.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Medical Disclaimer</h2>
+          <p>
+            MEdical Info does not provide diagnosis, treatment advice, or clinical recommendations.
+            It is an information storage and sharing tool only.
+          </p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
