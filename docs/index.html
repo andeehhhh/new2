@@ -3,7 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="MEdical Info keeps private medical details, medications, allergies, and a doctor-ready summary ready on your phone."
+    />
     <title>MEdical Info</title>
+    <link rel="icon" type="image/png" href="./assets/marketing/app-icon.svg" />
+    <link rel="apple-touch-icon" href="./assets/marketing/app-icon.svg" />
     <style>
       :root {
         color-scheme: light;
@@ -39,6 +45,11 @@
 
       html {
         scroll-behavior: smooth;
+      }
+
+      body,
+      [id] {
+        scroll-margin-top: 24px;
       }
 
       body {
@@ -78,10 +89,29 @@
         color: var(--brand-deep);
       }
 
+      .skip-link {
+        position: absolute;
+        left: 18px;
+        top: 12px;
+        z-index: 5;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: var(--text-strong);
+        color: #fff;
+        font-weight: 800;
+        text-decoration: none;
+        transform: translateY(-180%);
+        transition: transform 160ms ease;
+      }
+
+      .skip-link:focus-visible {
+        transform: translateY(0);
+      }
+
       .shell {
         position: relative;
         z-index: 1;
-        max-width: 1180px;
+        max-width: min(1560px, calc(100vw - 40px));
         margin: 0 auto;
         padding: 22px 18px 120px;
       }
@@ -117,10 +147,14 @@
         width: 46px;
         height: 46px;
         border-radius: 16px;
-        background: linear-gradient(135deg, var(--brand-bright), var(--brand));
-        color: var(--text-strong);
-        font-weight: 800;
-        letter-spacing: 0.04em;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(20, 86, 99, 0.12);
+      }
+
+      .brand-mark img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
       .brand-copy strong {
@@ -149,6 +183,15 @@
         color: var(--brand-deep);
       }
 
+      .nav a:hover,
+      .nav a:focus-visible,
+      .footer-link a:hover,
+      .footer-link a:focus-visible {
+        color: var(--text-strong);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+
       .button {
         display: inline-flex;
         align-items: center;
@@ -159,6 +202,7 @@
         border: 1px solid transparent;
         text-decoration: none;
         font-weight: 800;
+        touch-action: manipulation;
         transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease,
           background 160ms ease;
       }
@@ -188,9 +232,9 @@
 
       .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-        gap: 22px;
-        padding: 30px;
+        grid-template-columns: minmax(0, 1.12fr) minmax(420px, 0.98fr);
+        gap: 28px;
+        padding: 34px;
         border-radius: var(--radius-xl);
         margin-bottom: 20px;
       }
@@ -220,6 +264,7 @@
         font-family: var(--serif);
         line-height: 1.06;
         letter-spacing: -0.03em;
+        text-wrap: balance;
       }
 
       h1 {
@@ -235,6 +280,7 @@
       h3 {
         margin: 0 0 12px;
         font-size: 1.2rem;
+        text-wrap: balance;
       }
 
       p {
@@ -279,8 +325,8 @@
       .hero-preview {
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        padding: 18px;
+        gap: 18px;
+        padding: 22px;
         border-radius: 28px;
         background:
           radial-gradient(circle at top right, rgba(103, 208, 197, 0.16), transparent 28%),
@@ -315,13 +361,15 @@
 
       .preview-frame {
         display: grid;
-        grid-template-columns: minmax(0, 0.76fr) minmax(220px, 0.56fr);
-        gap: 16px;
-        align-items: center;
+        grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
       }
 
       .preview-screen {
-        padding: 14px;
+        width: min(100%, 360px);
+        margin: 0 auto;
+        padding: 16px;
         border-radius: 30px;
         background: linear-gradient(180deg, #ffffff, #edf7f5);
         border: 1px solid rgba(20, 86, 99, 0.12);
@@ -330,6 +378,7 @@
 
       .preview-screen img {
         width: 100%;
+        height: auto;
         border-radius: 22px;
         border: 1px solid rgba(20, 86, 99, 0.08);
       }
@@ -338,6 +387,18 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
+        min-width: 0;
+        padding-top: 8px;
+      }
+
+      .preview-copy,
+      .preview-meta ul,
+      .preview-meta li {
+        overflow-wrap: anywhere;
+      }
+
+      .preview-copy {
+        max-width: 26ch;
       }
 
       .preview-label {
@@ -355,6 +416,7 @@
         margin: 0;
         padding-left: 18px;
         color: var(--muted);
+        max-width: 24ch;
       }
 
       .preview-meta li + li {
@@ -499,6 +561,10 @@
       }
 
       .gallery-card img {
+        width: 100%;
+        aspect-ratio: 1 / 1.72;
+        object-fit: cover;
+        object-position: top center;
         border-radius: 18px;
         border: 1px solid rgba(20, 86, 99, 0.12);
         margin-bottom: 16px;
@@ -707,6 +773,10 @@
           grid-template-columns: 1fr;
         }
 
+        .preview-screen {
+          width: min(100%, 320px);
+        }
+
         .nav {
           justify-content: flex-start;
         }
@@ -736,10 +806,13 @@
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <div class="shell">
       <header class="topbar panel reveal">
         <div class="brand-block">
-          <div class="brand-mark" aria-hidden="true">MI</div>
+          <div class="brand-mark">
+            <img src="./assets/marketing/app-icon.svg" alt="MEdical Info app icon" width="46" height="46" />
+          </div>
           <div class="brand-copy">
             <strong>MEdical Info</strong>
             <span>Private medical info, ready when you need it.</span>
@@ -755,6 +828,7 @@
         </nav>
       </header>
 
+      <main id="main">
       <section class="hero panel reveal" id="top">
         <div class="hero-copy">
           <div class="eyebrow">Local-first medical card for appointments, forms, and family care</div>
@@ -792,6 +866,9 @@
                 id="preview-image"
                 src="./assets/marketing/home-summary.svg"
                 alt="MEdical Info home summary screen"
+                width="332"
+                height="720"
+                fetchpriority="high"
               />
             </div>
             <div class="preview-meta">
@@ -919,17 +996,17 @@
         <h2>Calm screens that show the app doing real work.</h2>
         <div class="gallery-grid">
           <article class="gallery-card">
-            <img src="./assets/marketing/home-summary.svg" alt="MEdical Info home summary screenshot" />
+            <img src="./assets/marketing/home-summary.svg" alt="MEdical Info home summary screenshot" width="332" height="720" loading="lazy" />
             <h3>Home summary</h3>
             <p><strong>Use it when:</strong> you want the main details ready without opening five different places.</p>
           </article>
           <article class="gallery-card">
-            <img src="./assets/marketing/medications.svg" alt="MEdical Info medications screenshot" />
+            <img src="./assets/marketing/medications.svg" alt="MEdical Info medications screenshot" width="332" height="720" loading="lazy" />
             <h3>Medications</h3>
             <p><strong>Use it when:</strong> you need names, stock, reminders, and a cleaner record of what is current.</p>
           </article>
           <article class="gallery-card">
-            <img src="./assets/marketing/doctor-view.svg" alt="MEdical Info Doctor View screenshot" />
+            <img src="./assets/marketing/doctor-view.svg" alt="MEdical Info Doctor View screenshot" width="332" height="720" loading="lazy" />
             <h3>Doctor View</h3>
             <p><strong>Use it when:</strong> an appointment, urgent form, or pharmacy handover needs a cleaner summary fast.</p>
           </article>
@@ -1064,6 +1141,7 @@
           It is an information storage and sharing tool only.
         </p>
       </section>
+      </main>
     </div>
 
     <div class="mobile-sticky">
