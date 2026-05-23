@@ -4,22 +4,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MEdical Info</title>
-    <meta
-      name="description"
-      content="MEdical Info keeps medications, allergies, conditions, emergency contacts, and a doctor-ready summary together on your iPhone."
-    />
     <style>
       :root {
         color-scheme: light;
-        --bg: #eef6f4;
-        --panel: rgba(255, 255, 255, 0.88);
-        --panel-strong: #ffffff;
-        --text: #17343b;
-        --muted: #5a767d;
-        --accent: #0f8f93;
-        --accent-dark: #0b6f73;
-        --line: rgba(19, 52, 59, 0.1);
-        --shadow: 0 22px 60px rgba(17, 58, 66, 0.12);
+        --bg: #edf6f5;
+        --bg-deep: #dfeeed;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-solid: #ffffff;
+        --surface-soft: #f5fbfa;
+        --text: #16313a;
+        --text-strong: #0d2229;
+        --muted: #5d7880;
+        --line: rgba(18, 78, 88, 0.12);
+        --line-strong: rgba(18, 78, 88, 0.22);
+        --brand: #2e8f87;
+        --brand-deep: #145663;
+        --brand-bright: #67d0c5;
+        --accent: #f5c774;
+        --accent-soft: #fff3d8;
+        --danger-soft: #f7e3e4;
+        --shadow: 0 20px 60px rgba(14, 55, 63, 0.12);
+        --shadow-soft: 0 12px 36px rgba(14, 55, 63, 0.08);
+        --radius-xl: 34px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --radius-sm: 14px;
+        --serif: "Iowan Old Style", "Libre Baskerville", Georgia, serif;
+        --sans: "Avenir Next", "IBM Plex Sans", "Segoe UI", sans-serif;
       }
 
       * {
@@ -32,348 +43,720 @@
 
       body {
         margin: 0;
-        font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+        font-family: var(--sans);
         color: var(--text);
         background:
-          radial-gradient(circle at top left, rgba(15, 143, 147, 0.18), transparent 34%),
-          linear-gradient(180deg, #f6fbfa 0%, var(--bg) 54%, #f6fafb 100%);
+          radial-gradient(circle at top left, rgba(103, 208, 197, 0.32), transparent 34%),
+          radial-gradient(circle at top right, rgba(245, 199, 116, 0.18), transparent 26%),
+          linear-gradient(180deg, #f8fcfb 0%, var(--bg) 48%, var(--bg-deep) 100%);
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.32)),
+          repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.14) 0,
+            rgba(255, 255, 255, 0.14) 2px,
+            transparent 2px,
+            transparent 16px
+          );
+        opacity: 0.3;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
       }
 
       a {
-        color: var(--accent-dark);
+        color: var(--brand-deep);
       }
 
       .shell {
-        max-width: 1140px;
+        position: relative;
+        z-index: 1;
+        max-width: 1180px;
         margin: 0 auto;
-        padding: 24px;
+        padding: 22px 18px 120px;
       }
 
-      .topbar,
       .panel {
-        background: var(--panel);
+        background: var(--surface);
         border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(18px);
       }
 
       .topbar {
-        border-radius: 24px;
-        padding: 18px 20px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
         gap: 18px;
-        margin-top: 16px;
-      }
-
-      .brand {
-        display: flex;
-        gap: 14px;
         align-items: center;
+        padding: 16px 18px;
+        border-radius: 999px;
+        margin-bottom: 18px;
       }
 
-      .mark {
-        width: 48px;
-        height: 48px;
+      .brand-block {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
         border-radius: 16px;
-        display: grid;
-        place-items: center;
+        background: linear-gradient(135deg, var(--brand-bright), var(--brand));
+        color: var(--text-strong);
         font-weight: 800;
-        letter-spacing: 0.08em;
-        background: linear-gradient(145deg, #0f8f93, #25b3a8);
-        color: white;
+        letter-spacing: 0.04em;
       }
 
-      .brand strong {
+      .brand-copy strong {
         display: block;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        color: var(--text-strong);
       }
 
-      .brand span {
+      .brand-copy span {
         display: block;
+        font-size: 0.92rem;
         color: var(--muted);
-        font-size: 0.94rem;
       }
 
       .nav {
         display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
         align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .nav a {
         text-decoration: none;
-        color: var(--text);
-        font-size: 0.96rem;
+        font-weight: 700;
+        color: var(--brand-deep);
       }
 
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         padding: 14px 20px;
         border-radius: 999px;
         border: 1px solid transparent;
         text-decoration: none;
-        font-weight: 700;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        font-weight: 800;
+        transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease,
+          background 160ms ease;
       }
 
-      .button:hover {
+      .button:hover,
+      .button:focus-visible {
         transform: translateY(-1px);
       }
 
       .button-primary {
-        background: linear-gradient(135deg, #0f8f93, #1fb2a3);
-        color: white;
-        box-shadow: 0 18px 30px rgba(15, 143, 147, 0.28);
+        background: var(--text-strong);
+        color: #fff;
+        box-shadow: 0 14px 28px rgba(13, 34, 41, 0.16);
       }
 
       .button-secondary {
-        border-color: var(--line);
         background: rgba(255, 255, 255, 0.78);
-        color: var(--text);
+        color: var(--brand-deep);
+        border-color: var(--line);
+      }
+
+      .button-ghost {
+        background: rgba(103, 208, 197, 0.12);
+        color: var(--brand-deep);
+        border-color: rgba(46, 143, 135, 0.18);
       }
 
       .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.9fr);
-        gap: 28px;
-        padding: 36px;
-        border-radius: 34px;
-        margin-top: 20px;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        gap: 22px;
+        padding: 30px;
+        border-radius: var(--radius-xl);
+        margin-bottom: 20px;
       }
 
       .eyebrow {
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        padding: 8px 14px;
         border-radius: 999px;
-        padding: 9px 14px;
-        background: rgba(15, 143, 147, 0.12);
-        color: var(--accent-dark);
-        font-weight: 700;
-        font-size: 0.9rem;
+        background: rgba(103, 208, 197, 0.16);
+        color: var(--brand-deep);
+        font-size: 0.92rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
       }
 
       h1,
       h2,
-      h3,
-      p {
-        margin: 0;
+      h3 {
+        color: var(--text-strong);
+      }
+
+      h1,
+      h2 {
+        font-family: var(--serif);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
       }
 
       h1 {
-        margin-top: 18px;
-        font-size: clamp(2.4rem, 5vw, 4.6rem);
-        line-height: 0.96;
-        letter-spacing: -0.04em;
+        margin: 18px 0 14px;
+        font-size: clamp(2.7rem, 6vw, 5.2rem);
       }
 
-      .hero p {
-        margin-top: 18px;
-        font-size: 1.08rem;
-        line-height: 1.7;
+      h2 {
+        margin: 0 0 16px;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+      }
+
+      h3 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0;
         color: var(--muted);
-        max-width: 760px;
+        line-height: 1.65;
+      }
+
+      .hero-copy p {
+        max-width: 58ch;
+        font-size: 1.08rem;
       }
 
       .hero-actions {
         display: flex;
+        gap: 12px;
         flex-wrap: wrap;
+        margin-top: 24px;
+      }
+
+      .trust-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
         margin-top: 24px;
       }
 
-      .pill-row {
+      .trust-pill {
+        padding: 14px 16px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(46, 143, 135, 0.14);
+        background: rgba(255, 255, 255, 0.72);
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .hero-note {
+        margin-top: 18px;
+        font-size: 0.95rem;
+      }
+
+      .hero-preview {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 18px;
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at top right, rgba(103, 208, 197, 0.16), transparent 28%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(245, 251, 250, 0.96));
+        border: 1px solid rgba(20, 86, 99, 0.12);
+      }
+
+      .preview-tabs {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        margin-top: 22px;
       }
 
-      .pill {
-        padding: 10px 14px;
+      .preview-tab {
+        appearance: none;
+        border: 1px solid rgba(20, 86, 99, 0.12);
+        background: rgba(255, 255, 255, 0.84);
+        color: var(--brand-deep);
         border-radius: 999px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
-        font-size: 0.92rem;
+        padding: 10px 14px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 160ms ease, color 160ms ease, transform 160ms ease;
       }
 
-      .hero-card {
-        border-radius: 28px;
-        padding: 24px;
-        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240, 248, 247, 0.92));
-        border: 1px solid var(--line);
+      .preview-tab.is-active {
+        background: var(--text-strong);
+        color: #fff;
+        transform: translateY(-1px);
+      }
+
+      .preview-frame {
         display: grid;
+        grid-template-columns: minmax(0, 0.76fr) minmax(220px, 0.56fr);
         gap: 16px;
+        align-items: center;
       }
 
-      .hero-card h3 {
-        font-size: 1.24rem;
+      .preview-screen {
+        padding: 14px;
+        border-radius: 30px;
+        background: linear-gradient(180deg, #ffffff, #edf7f5);
+        border: 1px solid rgba(20, 86, 99, 0.12);
+        box-shadow: 0 18px 40px rgba(20, 86, 99, 0.12);
       }
 
-      .mini-list {
-        display: grid;
+      .preview-screen img {
+        width: 100%;
+        border-radius: 22px;
+        border: 1px solid rgba(20, 86, 99, 0.08);
+      }
+
+      .preview-meta {
+        display: flex;
+        flex-direction: column;
         gap: 12px;
       }
 
-      .mini-item {
-        border-radius: 18px;
-        padding: 14px 16px;
-        background: rgba(255,255,255,0.86);
-        border: 1px solid rgba(19,52,59,0.08);
-      }
-
-      .mini-item strong {
-        display: block;
-        margin-bottom: 4px;
-      }
-
-      section.block {
-        margin-top: 22px;
-      }
-
-      .panel {
-        border-radius: 30px;
-        padding: 32px;
-      }
-
-      .kicker {
-        color: var(--accent-dark);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        font-size: 0.75rem;
+      .preview-label {
+        display: inline-flex;
+        align-self: flex-start;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: #765104;
         font-weight: 800;
-        margin-bottom: 12px;
+        font-size: 0.9rem;
       }
 
-      h2 {
-        font-size: clamp(1.7rem, 3vw, 3rem);
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-      }
-
-      .lede {
-        margin-top: 14px;
-        max-width: 840px;
+      .preview-meta ul {
+        margin: 0;
+        padding-left: 18px;
         color: var(--muted);
-        line-height: 1.75;
-        font-size: 1.03rem;
       }
 
-      .grid {
+      .preview-meta li + li {
+        margin-top: 8px;
+      }
+
+      .status-strip {
         display: grid;
-        gap: 16px;
-        margin-top: 22px;
-      }
-
-      .grid.two {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .grid.three {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
       }
 
-      .card {
-        border-radius: 24px;
-        padding: 22px;
-        background: var(--panel-strong);
+      .status-card {
+        padding: 20px;
+        border-radius: var(--radius-lg);
+      }
+
+      .status-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.08rem;
+        color: var(--text-strong);
+      }
+
+      .section {
+        padding: 30px;
+        border-radius: var(--radius-xl);
+        margin-bottom: 20px;
+      }
+
+      .section-kicker {
+        margin-bottom: 12px;
+        color: var(--brand-deep);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.88rem;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .problem-visual,
+      .solution-card {
+        padding: 24px;
+        border-radius: 26px;
+        background: var(--surface-solid);
         border: 1px solid var(--line);
+        box-shadow: var(--shadow-soft);
       }
 
-      .card h3 {
-        font-size: 1.18rem;
-        margin-bottom: 8px;
+      .problem-visual h3,
+      .solution-card h3 {
+        margin-bottom: 18px;
       }
 
-      .card p,
-      .card li {
-        color: var(--muted);
-        line-height: 1.7;
+      .chip-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        min-height: 170px;
+        align-content: flex-start;
       }
 
-      ul {
-        margin: 14px 0 0;
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 16px;
+        border-radius: 999px;
+        background: #ffffff;
+        border: 1px solid rgba(20, 86, 99, 0.12);
+        font-weight: 800;
+        color: var(--text);
+        box-shadow: 0 10px 20px rgba(20, 86, 99, 0.08);
+        transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+        transform: translate(var(--shift-x), var(--shift-y)) rotate(var(--spin));
+      }
+
+      .problem-visual.is-settled .chip {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      .solution-list {
+        margin: 18px 0 0;
         padding-left: 18px;
       }
 
-      .cta {
-        display: flex;
-        justify-content: space-between;
+      .solution-list li + li {
+        margin-top: 10px;
+      }
+
+      .feature-grid,
+      .gallery-grid,
+      .quote-grid,
+      .faq-grid,
+      .footer-links {
+        display: grid;
+        gap: 16px;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 22px;
+      }
+
+      .feature-card,
+      .gallery-card,
+      .quote-card,
+      .faq-card,
+      .trust-card {
+        padding: 22px;
+        border-radius: 24px;
+        background: var(--surface-solid);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .feature-card p strong,
+      .gallery-card p strong {
+        color: var(--text-strong);
+      }
+
+      .feature-tag {
+        display: inline-flex;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(103, 208, 197, 0.14);
+        color: var(--brand-deep);
+        font-size: 0.86rem;
+        font-weight: 800;
+        margin-bottom: 14px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 22px;
+      }
+
+      .gallery-card img {
+        border-radius: 18px;
+        border: 1px solid rgba(20, 86, 99, 0.12);
+        margin-bottom: 16px;
+        box-shadow: 0 12px 28px rgba(20, 86, 99, 0.12);
+      }
+
+      .quote-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 22px;
+      }
+
+      .quote-card {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(245, 251, 250, 0.96));
+      }
+
+      .quote-card strong {
+        display: inline-flex;
+        margin-bottom: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: #78540a;
+        font-size: 0.86rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .quote {
+        color: var(--text-strong);
+        font-family: var(--serif);
+        font-size: 1.45rem;
+        line-height: 1.28;
+      }
+
+      .trust-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .trust-points {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .trust-points li + li {
+        margin-top: 10px;
+      }
+
+      .faq-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 22px;
+      }
+
+      .faq-card details {
+        border-bottom: 1px solid rgba(20, 86, 99, 0.1);
+        padding: 14px 0;
+      }
+
+      .faq-card details:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .faq-card summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 800;
+        color: var(--text-strong);
+      }
+
+      .faq-card summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-card details p {
+        margin-top: 10px;
+        padding-right: 10px;
+      }
+
+      .cta-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 22px;
         align-items: center;
-        gap: 20px;
+      }
+
+      .cta-actions {
+        display: flex;
         flex-wrap: wrap;
+        gap: 12px;
+        justify-content: flex-end;
       }
 
       .footer-links {
-        display: flex;
-        gap: 18px;
-        flex-wrap: wrap;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 20px;
+      }
+
+      .footer-link {
+        padding: 18px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(20, 86, 99, 0.08);
+      }
+
+      .footer-link strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-strong);
+      }
+
+      .small-print {
         margin-top: 18px;
-        color: var(--muted);
-        font-size: 0.96rem;
+        font-size: 0.95rem;
       }
 
-      .footer-links a {
-        color: inherit;
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 440ms ease, transform 440ms ease;
       }
 
-      @media (max-width: 920px) {
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .mobile-sticky {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 3;
+        display: none;
+        padding: 12px;
+        border-radius: 22px;
+        background: rgba(13, 34, 41, 0.94);
+        box-shadow: 0 20px 40px rgba(13, 34, 41, 0.2);
+        backdrop-filter: blur(18px);
+      }
+
+      .mobile-sticky a {
+        width: 100%;
+      }
+
+      @media (max-width: 1080px) {
         .hero,
-        .grid.two,
-        .grid.three {
+        .split,
+        .trust-grid,
+        .cta-panel {
           grid-template-columns: 1fr;
         }
 
-        .topbar {
-          align-items: flex-start;
-          flex-direction: column;
+        .feature-grid,
+        .gallery-grid,
+        .quote-grid,
+        .faq-grid,
+        .footer-links,
+        .status-strip,
+        .trust-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .cta-actions {
+          justify-content: flex-start;
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 760px) {
         .shell {
-          padding: 16px;
+          padding: 14px 14px 120px;
         }
 
+        .topbar,
         .hero,
-        .panel {
-          padding: 24px;
-          border-radius: 24px;
+        .section {
+          padding: 18px;
+        }
+
+        .topbar {
+          border-radius: 30px;
         }
 
         h1 {
-          line-height: 1.02;
+          font-size: clamp(2.2rem, 11vw, 3.5rem);
+        }
+
+        h2 {
+          font-size: clamp(1.8rem, 8vw, 2.6rem);
+        }
+
+        .feature-grid,
+        .gallery-grid,
+        .quote-grid,
+        .faq-grid,
+        .footer-links,
+        .status-strip,
+        .trust-list {
+          grid-template-columns: 1fr;
+        }
+
+        .preview-frame {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          justify-content: flex-start;
+        }
+
+        .mobile-sticky {
+          display: block;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .reveal,
+        .chip,
+        .button,
+        .preview-tab {
+          transition: none;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
         }
       }
     </style>
   </head>
   <body>
     <div class="shell">
-      <header class="topbar">
-        <div class="brand">
-          <div class="mark" aria-hidden="true">MI</div>
-          <div>
+      <header class="topbar panel reveal">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">MI</div>
+          <div class="brand-copy">
             <strong>MEdical Info</strong>
             <span>Private medical info, ready when you need it.</span>
           </div>
         </div>
         <nav class="nav" aria-label="Primary">
-          <a href="#why">Why it helps</a>
+          <a href="#problem">Why it helps</a>
           <a href="#features">Features</a>
-          <a href="#faq">FAQ</a>
+          <a href="#preview">Screens</a>
           <a href="https://andeehhhh.github.io/new2/support.html">Support</a>
           <a href="https://andeehhhh.github.io/new2/privacy-policy.html">Privacy Policy</a>
+          <a class="button button-ghost" href="https://apps.apple.com/app/id6768694337">View on the App Store</a>
         </nav>
       </header>
 
-      <section class="hero panel">
-        <div>
+      <section class="hero panel reveal" id="top">
+        <div class="hero-copy">
           <div class="eyebrow">Local-first medical card for appointments, forms, and family care</div>
           <h1>One calm place for the medical details people keep asking for.</h1>
           <p>
@@ -384,133 +767,429 @@
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="https://apps.apple.com/app/id6768694337">View on the App Store</a>
-            <a class="button button-secondary" href="https://andeehhhh.github.io/new2/support.html">Get support</a>
+            <a class="button button-secondary" href="#preview">See the app screens</a>
           </div>
-          <div class="pill-row">
-            <div class="pill">Most medical info stays on the device</div>
-            <div class="pill">No account required in the current version</div>
-            <div class="pill">No third-party analytics or ad SDKs in the current version</div>
+          <div class="trust-list">
+            <div class="trust-pill">Most medical info stays on the device</div>
+            <div class="trust-pill">No account required in the current version</div>
+            <div class="trust-pill">No third-party analytics or ad SDKs in the current version</div>
+          </div>
+          <p class="hero-note">
+            Built for patients, carers, older adults, and families who want a calmer way to keep
+            important details ready for appointments, pharmacies, and care moments.
+          </p>
+        </div>
+
+        <div class="hero-preview" id="preview">
+          <div class="preview-tabs" aria-label="App preview tabs">
+            <button class="preview-tab is-active" type="button" data-preview="home">Home card</button>
+            <button class="preview-tab" type="button" data-preview="meds">Medications</button>
+            <button class="preview-tab" type="button" data-preview="doctor">Doctor View</button>
+          </div>
+          <div class="preview-frame">
+            <div class="preview-screen">
+              <img
+                id="preview-image"
+                src="./assets/marketing/home-summary.svg"
+                alt="MEdical Info home summary screen"
+              />
+            </div>
+            <div class="preview-meta">
+              <span class="preview-label" id="preview-label">Home summary</span>
+              <h3 id="preview-title">Your key details, ready fast</h3>
+              <p id="preview-copy">
+                See allergies, current medications, emergency contact, quiet hours, and last
+                updated details in one calm summary card.
+              </p>
+              <ul id="preview-points">
+                <li>Readable at a glance when you are rushed or already stressed</li>
+                <li>Shows the details people keep asking for</li>
+                <li>Designed for real use, not just storage</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <aside class="hero-card" aria-label="Quick summary">
-          <h3>Built for the moments that already happen</h3>
-          <div class="mini-list">
-            <div class="mini-item">
-              <strong>Appointments</strong>
-              <span>Show a cleaner summary instead of rebuilding details from memory.</span>
-            </div>
-            <div class="mini-item">
-              <strong>Pharmacies</strong>
-              <span>Keep current medications and key medical context easier to review.</span>
-            </div>
-            <div class="mini-item">
-              <strong>Family care</strong>
-              <span>Useful when helping manage details for someone you care for.</span>
-            </div>
-          </div>
-        </aside>
       </section>
 
-      <section class="block panel" id="why">
-        <div class="kicker">The real problem</div>
+      <section class="status-strip">
+        <article class="status-card panel reveal">
+          <strong>Doctor-ready in one tap</strong>
+          <p>Open a clean summary instead of hunting through Notes, screenshots, and old forms.</p>
+        </article>
+        <article class="status-card panel reveal">
+          <strong>Private by design</strong>
+          <p>Most medical information stays on the device, with optional app lock and screen privacy features.</p>
+        </article>
+        <article class="status-card panel reveal">
+          <strong>Built for real family use</strong>
+          <p>Useful for your own card, a parent’s details, repeated appointments, and medication-heavy routines.</p>
+        </article>
+      </section>
+
+      <section class="section panel reveal" id="problem">
+        <div class="section-kicker">The real problem</div>
         <h2>The issue is not missing information. It is having the right information in the wrong places.</h2>
-        <p class="lede">
-          Most people already have their medical information, but it is scattered across notes,
-          screenshots, paper, memory, text threads, old forms, and discharge letters. MEdical Info
-          brings the essentials together into one practical medical card.
-        </p>
-        <div class="grid two">
-          <article class="card">
+        <div class="split" style="margin-top: 22px;">
+          <div class="problem-visual" id="problem-visual">
             <h3>What people use now</h3>
-            <ul>
-              <li>Notes and screenshots</li>
-              <li>Paper medication lists</li>
-              <li>Memory under pressure</li>
-              <li>Text messages and old forms</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>What MEdical Info replaces it with</h3>
-            <ul>
-              <li>One readable home summary</li>
-              <li>Medications, allergies, and conditions together</li>
-              <li>Doctor-ready information when asked</li>
-              <li>Local backup and restore when you want control</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section class="block panel" id="features">
-        <div class="kicker">What you can do</div>
-        <h2>Replace the pile with one practical medical card.</h2>
-        <div class="grid three">
-          <article class="card">
-            <h3>Your medical summary</h3>
-            <p>Keep key details, conditions, allergies, blood type, and emergency contact information together in one readable home card.</p>
-          </article>
-          <article class="card">
-            <h3>Medication details without the clutter</h3>
-            <p>Track medication names, dose patterns, stock, and reminders so you are not trying to remember everything from memory or pill bottles.</p>
-          </article>
-          <article class="card">
-            <h3>Doctor-ready on the phone</h3>
-            <p>Open a clean summary when a clinician, pharmacist, or family member asks what you take and what matters medically.</p>
-          </article>
-          <article class="card">
-            <h3>Private in the current version</h3>
-            <p>No account is required in the current version, most medical information stays on the device, and optional app lock helps reduce casual access.</p>
-          </article>
-          <article class="card">
-            <h3>Local export and restore</h3>
-            <p>Export a local backup, restore from a previous backup, and keep more control over how your card moves between devices.</p>
-          </article>
-          <article class="card">
-            <h3>Built for real family use</h3>
-            <p>Useful for your own details or when helping manage medical information for someone you care for, with their permission.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="block panel" id="faq">
-        <div class="kicker">FAQ</div>
-        <h2>Common questions from new users.</h2>
-        <div class="grid two">
-          <article class="card">
-            <h3>Who is this for?</h3>
-            <p>Patients, carers, older adults, families, and anyone who wants a simpler way to keep key medical details together on their iPhone.</p>
-          </article>
-          <article class="card">
-            <h3>Is this a replacement for medical advice?</h3>
-            <p>No. MEdical Info is an organisation tool for personal reference and sharing. Always follow advice from your doctor, pharmacist, hospital, or other qualified clinician.</p>
-          </article>
-          <article class="card">
-            <h3>Where is my information stored?</h3>
-            <p>Most medical information stays on the device in the current version. Read the privacy policy for the exact details and the optional address lookup exception.</p>
-          </article>
-          <article class="card">
-            <h3>Where can I download it?</h3>
-            <p>Use the App Store button on this page to open the live MEdical Info listing.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="block panel">
-        <div class="cta">
-          <div>
-            <div class="kicker">Next step</div>
-            <h2>MEdical Info is now live on the App Store.</h2>
-            <p class="lede">Download it now, or use the public support and privacy pages if you want more detail first.</p>
+            <div class="chip-grid" aria-label="Common scattered systems">
+              <span class="chip" style="--shift-x:-26px; --shift-y:-16px; --spin:-10deg;">Notes</span>
+              <span class="chip" style="--shift-x:18px; --shift-y:-24px; --spin:9deg;">Screenshots</span>
+              <span class="chip" style="--shift-x:-12px; --shift-y:12px; --spin:-7deg;">Paper list</span>
+              <span class="chip" style="--shift-x:24px; --shift-y:10px; --spin:12deg;">Text thread</span>
+              <span class="chip" style="--shift-x:-22px; --shift-y:18px; --spin:6deg;">Memory</span>
+              <span class="chip" style="--shift-x:10px; --shift-y:-8px; --spin:-11deg;">Wallet card</span>
+              <span class="chip" style="--shift-x:-6px; --shift-y:20px; --spin:8deg;">Old form</span>
+            </div>
           </div>
-          <a class="button button-primary" href="https://apps.apple.com/app/id6768694337">View on the App Store</a>
+          <div class="solution-card">
+            <h3>What MEdical Info replaces it with</h3>
+            <p>
+              One calm medical card for the details people keep asking for. Start with the
+              essentials, add more over time, and stop rebuilding the same information from
+              scratch every time someone asks.
+            </p>
+            <ul class="solution-list">
+              <li>medications, allergies, and conditions in one readable place</li>
+              <li>doctor and emergency contact details that are easier to show and update</li>
+              <li>a clean Doctor View for appointments, handovers, and forms</li>
+              <li>local backup and restore when you want extra control</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section panel reveal" id="features">
+        <div class="section-kicker">What you can do</div>
+        <h2>Replace the pile with one practical medical card.</h2>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-tag">Snapshot</div>
+            <h3>Your medical summary</h3>
+            <p>
+              Keep key details, conditions, allergies, blood type, and emergency contact
+              information together in one readable home card.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-tag">Meds</div>
+            <h3>Medication details without the clutter</h3>
+            <p>
+              Track medication names, dose patterns, stock, and reminders so you are not trying
+              to remember everything from memory or pill bottles.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-tag">Appointments</div>
+            <h3>Doctor-ready on the phone</h3>
+            <p>
+              Open a clean summary when a clinician, pharmacist, or family member asks what you
+              take and what matters medically.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-tag">Privacy</div>
+            <h3>Private in the current version</h3>
+            <p>
+              No account is required in the current version, most medical information stays on the
+              device, and optional device-auth app lock helps reduce casual access.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-tag">Backup</div>
+            <h3>Local export and restore</h3>
+            <p>
+              Export a local backup, restore from a previous backup, and keep more control over
+              how your card moves between devices.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-tag">Care</div>
+            <h3>Built for real family use</h3>
+            <p>
+              Useful for your own details or when helping manage medical information for someone
+              you care for, with their permission.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal" id="screens">
+        <div class="section-kicker">See the flow</div>
+        <h2>Calm screens that show the app doing real work.</h2>
+        <div class="gallery-grid">
+          <article class="gallery-card">
+            <img src="./assets/marketing/home-summary.svg" alt="MEdical Info home summary screenshot" />
+            <h3>Home summary</h3>
+            <p><strong>Use it when:</strong> you want the main details ready without opening five different places.</p>
+          </article>
+          <article class="gallery-card">
+            <img src="./assets/marketing/medications.svg" alt="MEdical Info medications screenshot" />
+            <h3>Medications</h3>
+            <p><strong>Use it when:</strong> you need names, stock, reminders, and a cleaner record of what is current.</p>
+          </article>
+          <article class="gallery-card">
+            <img src="./assets/marketing/doctor-view.svg" alt="MEdical Info Doctor View screenshot" />
+            <h3>Doctor View</h3>
+            <p><strong>Use it when:</strong> an appointment, urgent form, or pharmacy handover needs a cleaner summary fast.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-kicker">Launch-safe social proof</div>
+        <h2>Made for the moments families already recognise.</h2>
+        <div class="quote-grid">
+          <article class="quote-card">
+            <strong>Early user signal</strong>
+            <p class="quote">“I just wanted one place to keep Mum’s medications and emergency contacts.”</p>
+          </article>
+          <article class="quote-card">
+            <strong>Early user signal</strong>
+            <p class="quote">“This would have helped at every specialist appointment.”</p>
+          </article>
+          <article class="quote-card">
+            <strong>Early user signal</strong>
+            <p class="quote">“Simple enough that I would actually keep it updated.”</p>
+          </article>
+        </div>
+        <p class="small-print">
+          These are launch-note style statements based on real-world use cases, not published App
+          Store reviews. Replace them with genuine customer feedback as reviews come in.
+        </p>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-kicker">Trust</div>
+        <h2>Sharp about privacy, careful about claims.</h2>
+        <div class="trust-grid">
+          <article class="trust-card">
+            <h3>What the current version promises</h3>
+            <ul class="trust-points">
+              <li>most medical information stays on the device</li>
+              <li>no account is required in the current version</li>
+              <li>no third-party analytics, advertising SDKs, or tracking tools in the current version</li>
+              <li>local notifications, local backup, and local restore are supported</li>
+              <li>optional app lock and screen privacy protection are available</li>
+            </ul>
+          </article>
+          <article class="trust-card">
+            <h3>What we say carefully</h3>
+            <p>
+              MEdical Info is an information organisation and sharing tool. It does not provide
+              diagnosis, treatment advice, or clinical recommendations.
+            </p>
+            <p style="margin-top: 14px;">
+              Optional address autocomplete sends typed lookup text to Google Places only when the
+              user actively uses that feature. Manual address entry still works without it.
+            </p>
+            <p style="margin-top: 14px;">
+              <a href="https://andeehhhh.github.io/new2/privacy-policy.html">Read the Privacy Policy</a> for the full current-version details.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-kicker">FAQ</div>
+        <h2>Common questions from new users.</h2>
+        <div class="faq-grid">
+          <article class="faq-card">
+            <details open>
+              <summary>Who is this for?</summary>
+              <p>Patients, carers, older adults, families, and anyone who wants a simpler way to keep key medical details together on their iPhone.</p>
+            </details>
+            <details>
+              <summary>Is this a replacement for medical advice?</summary>
+              <p>No. MEdical Info is an organisation tool for personal reference and sharing. Always follow advice from your doctor, pharmacist, hospital, or other qualified clinician.</p>
+            </details>
+            <details>
+              <summary>What should I put in it first?</summary>
+              <p>Start with medications, allergies, conditions, emergency contact details, and the doctor information you most often need in appointments or forms.</p>
+            </details>
+          </article>
+          <article class="faq-card">
+            <details open>
+              <summary>Where is my information stored?</summary>
+              <p>Most medical information stays on the device in the current version. See the privacy policy for the exact details and the optional address lookup exception.</p>
+            </details>
+            <details>
+              <summary>Can I use it for someone I care for?</summary>
+              <p>Yes, if you have their permission and are helping manage their details. The app is especially useful when one person helps keep appointments, medications, and key contacts organised.</p>
+            </details>
+            <details>
+              <summary>Where can I download it?</summary>
+              <p>Use the App Store button on this page to open the live MEdical Info listing.</p>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="cta-panel">
+          <div>
+            <div class="section-kicker">Next step</div>
+            <h2>Get your medical details out of notes, paper, and memory.</h2>
+            <p>
+              MEdical Info is now live on the App Store. Use the App Store button to download it,
+              and send a quick note if you have practical feedback or support questions.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <a class="button button-primary" href="https://apps.apple.com/app/id6768694337">View on the App Store</a>
+            <a class="button button-secondary" href="https://andeehhhh.github.io/new2/support.html">Support</a>
+            <a class="button button-secondary" href="https://andeehhhh.github.io/new2/privacy-policy.html">Privacy Policy</a>
+          </div>
         </div>
         <div class="footer-links">
-          <a href="https://andeehhhh.github.io/new2/support.html">Support</a>
-          <a href="https://andeehhhh.github.io/new2/privacy-policy.html">Privacy Policy</a>
-          <a href="https://andeehhhh.github.io/new2/license.html">License</a>
-          <a href="mailto:jewell.a@hotmail.com">jewell.a@hotmail.com</a>
+          <div class="footer-link">
+            <strong>Support</strong>
+            <p><a href="https://andeehhhh.github.io/new2/support.html">Open the public support page</a></p>
+          </div>
+          <div class="footer-link">
+            <strong>Privacy</strong>
+            <p><a href="https://andeehhhh.github.io/new2/privacy-policy.html">Read the privacy policy</a></p>
+          </div>
+          <div class="footer-link">
+            <strong>License</strong>
+            <p><a href="https://andeehhhh.github.io/new2/license.html">Read the license and terms</a></p>
+          </div>
+          <div class="footer-link">
+            <strong>Contact</strong>
+            <p><a href="mailto:jewell.a@hotmail.com">jewell.a@hotmail.com</a></p>
+          </div>
         </div>
+        <p class="small-print">
+          MEdical Info does not provide diagnosis, treatment advice, or clinical recommendations.
+          It is an information storage and sharing tool only.
+        </p>
       </section>
     </div>
+
+    <div class="mobile-sticky">
+      <a class="button button-primary" href="https://apps.apple.com/app/id6768694337">View on the App Store</a>
+    </div>
+
+    <script>
+      const previewData = {
+        home: {
+          image: "./assets/marketing/home-summary.svg",
+          alt: "MEdical Info home summary screenshot",
+          label: "Home summary",
+          title: "Your key details, ready fast",
+          copy:
+            "See allergies, current medications, emergency contact, quiet hours, and last updated details in one calm summary card.",
+          points: [
+            "Readable at a glance when you are rushed or already stressed",
+            "Shows the details people keep asking for",
+            "Designed for real use, not just storage",
+          ],
+        },
+        meds: {
+          image: "./assets/marketing/medications.svg",
+          alt: "MEdical Info medications screenshot",
+          label: "Medications",
+          title: "Medication details without the paper trail",
+          copy:
+            "Track current medications, stock, reminders, and recent activity without rebuilding the same list every visit.",
+          points: [
+            "Useful for repeat appointments and pharmacy handovers",
+            "Supports reminder-aware medication workflows",
+            "Keeps current information easier to review",
+          ],
+        },
+        doctor: {
+          image: "./assets/marketing/doctor-view.svg",
+          alt: "MEdical Info Doctor View screenshot",
+          label: "Doctor View",
+          title: "A clean summary to show when you need it",
+          copy:
+            "Open a read-only summary when a doctor, clinician, or family member needs the essentials without the clutter.",
+          points: [
+            "Better for appointments, forms, and urgent questions",
+            "Keeps the main medical picture easier to share",
+            "Built around showing details, not hunting for them",
+          ],
+        },
+      };
+
+      const previewImage = document.getElementById("preview-image");
+      const previewLabel = document.getElementById("preview-label");
+      const previewTitle = document.getElementById("preview-title");
+      const previewCopy = document.getElementById("preview-copy");
+      const previewPoints = document.getElementById("preview-points");
+      const previewTabs = Array.from(document.querySelectorAll(".preview-tab"));
+
+      function renderPreview(key) {
+        const next = previewData[key];
+        if (!next) {
+          return;
+        }
+
+        previewImage.src = next.image;
+        previewImage.alt = next.alt;
+        previewLabel.textContent = next.label;
+        previewTitle.textContent = next.title;
+        previewCopy.textContent = next.copy;
+        previewPoints.innerHTML = "";
+
+        next.points.forEach((point) => {
+          const item = document.createElement("li");
+          item.textContent = point;
+          previewPoints.appendChild(item);
+        });
+
+        previewTabs.forEach((tab) => {
+          tab.classList.toggle("is-active", tab.dataset.preview === key);
+        });
+      }
+
+      previewTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          renderPreview(tab.dataset.preview);
+        });
+      });
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const revealTargets = document.querySelectorAll(".reveal");
+      const problemVisual = document.getElementById("problem-visual");
+
+      if (prefersReducedMotion) {
+        revealTargets.forEach((item) => item.classList.add("is-visible"));
+        if (problemVisual) {
+          problemVisual.classList.add("is-settled");
+        }
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+
+        revealTargets.forEach((item) => revealObserver.observe(item));
+
+        if (problemVisual) {
+          const chipObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  problemVisual.classList.add("is-settled");
+                  chipObserver.disconnect();
+                }
+              });
+            },
+            { threshold: 0.35 }
+          );
+
+          chipObserver.observe(problemVisual);
+        }
+      }
+    </script>
   </body>
 </html>
